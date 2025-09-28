@@ -74,6 +74,16 @@ class LinkedList {
 		if (traverse.value === value) return index; //check for last node
 		return null;
 	}
+	toString() {
+		let traverse = this.#head;
+		let listString = "";
+		while (traverse.nextNode != null) {
+			listString = listString + `( ${traverse.value} ) -> `;
+			traverse = traverse.nextNode;
+		}
+		listString = listString + `( ${traverse.value} ) -> null`;
+		return listString;
+	}
 }
 
 let list1 = new LinkedList();
@@ -81,4 +91,4 @@ list1.append(1);
 list1.append(3);
 list1.append(2);
 
-console.log(list1.find(2));
+console.log(list1.toString());
