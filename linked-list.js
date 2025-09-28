@@ -31,6 +31,11 @@ class LinkedList {
 	head() {
 		return this.#head;
 	}
+	tail() {
+		let traverse = this.#head;
+		while (traverse.nextNode != null) traverse = traverse.nextNode;
+		return traverse;
+	}
 	at(index) {
 		if (index >= this.size())
 			return { error: new Error("Index must be less than list size!") };
@@ -53,3 +58,4 @@ list1.append(2);
 
 console.log(list1.head());
 console.log(list1.size());
+console.log(list1.tail());
