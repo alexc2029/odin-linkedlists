@@ -1,18 +1,23 @@
 import { Node } from "./node.js";
 
 class LinkedList {
-	constructor() {
-		this.listArr = [];
-		this.head = null;
-	}
+	#head = null;
 	append(value) {
 		let node = new Node(value);
-		let i = 0;
-		while (i < this.listArr.length && this.listArr[i].nextNode != null) i++;
-		this.listArr[i] = node;
+		if (this.#head === null) this.#head = node;
+		else {
+			let traverse = this.#head;
+			while (traverse.nextNode != null) traverse = traverse.nextNode;
+			traverse.nextNode = node;
+		}
+	}
+	head() {
+		return this.#head;
 	}
 }
 
 let list1 = new LinkedList();
 list1.append(1);
-console.log(list1.listArr);
+list1.append(3);
+list1.append(2);
+console.log(list1.head());
