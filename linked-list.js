@@ -19,6 +19,15 @@ class LinkedList {
 			this.#head = node;
 		}
 	}
+	size() {
+		let traverse = this.#head;
+		let listSize = 1;
+		while (traverse.nextNode != null) {
+			traverse = traverse.nextNode;
+			listSize++;
+		}
+		return listSize;
+	}
 	head() {
 		return this.#head;
 	}
@@ -28,7 +37,6 @@ let list1 = new LinkedList();
 list1.append(1);
 list1.append(3);
 list1.append(2);
-list1.prepend(5);
-list1.append(4);
 
 console.log(list1.head());
+console.log(list1.size());
