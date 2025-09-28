@@ -63,6 +63,17 @@ class LinkedList {
 		if (traverse.value === value) return true; //check for last node
 		return false;
 	}
+	find(value) {
+		let traverse = this.#head;
+		let index = 0;
+		while (traverse.nextNode != null) {
+			if (traverse.value === value) return index;
+			traverse = traverse.nextNode;
+			index++;
+		}
+		if (traverse.value === value) return index; //check for last node
+		return null;
+	}
 }
 
 let list1 = new LinkedList();
@@ -70,7 +81,4 @@ list1.append(1);
 list1.append(3);
 list1.append(2);
 
-console.log(list1.head());
-console.log(list1.size());
-console.log(list1.tail());
-console.log(list1.contains(2));
+console.log(list1.find(2));
