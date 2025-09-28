@@ -54,6 +54,15 @@ class LinkedList {
 		while (traverse.nextNode.nextNode != null) traverse = traverse.nextNode;
 		traverse.nextNode = null;
 	}
+	contains(value) {
+		let traverse = this.#head;
+		while (traverse.nextNode != null) {
+			if (traverse.value === value) return true;
+			traverse = traverse.nextNode;
+		}
+		if (traverse.value === value) return true; //check for last node
+		return false;
+	}
 }
 
 let list1 = new LinkedList();
@@ -64,3 +73,4 @@ list1.append(2);
 console.log(list1.head());
 console.log(list1.size());
 console.log(list1.tail());
+console.log(list1.contains(2));
