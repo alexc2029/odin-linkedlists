@@ -49,6 +49,11 @@ class LinkedList {
 			return traverse;
 		}
 	}
+	pop() {
+		let traverse = this.#head;
+		while (traverse.nextNode.nextNode != null) traverse = traverse.nextNode;
+		traverse.nextNode = null;
+	}
 }
 
 let list1 = new LinkedList();
