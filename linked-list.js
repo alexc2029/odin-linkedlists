@@ -85,6 +85,8 @@ class LinkedList {
 		return listString;
 	}
 	insertAt(value, index) {
+		if (index >= this.size())
+			return { error: new Error("Index must be less than list size!") };
 		let node = new Node(value);
 		let traverse = this.#head;
 		let listIndex = 0;
@@ -96,6 +98,8 @@ class LinkedList {
 		traverse.nextNode = node;
 	}
 	removeAt(index) {
+		if (index >= this.size())
+			return { error: new Error("Index must be less than list size!") };
 		let traverse = this.#head;
 		let listIndex = 0;
 		while (listIndex < index - 1 && traverse.nextNode != null) {
@@ -105,12 +109,3 @@ class LinkedList {
 		traverse.nextNode = traverse.nextNode.nextNode;
 	}
 }
-
-let list1 = new LinkedList();
-list1.append(1);
-list1.append(3);
-list1.append(2);
-list1.insertAt(29, 1);
-list1.removeAt(1);
-
-console.log(list1.toString());
