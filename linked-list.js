@@ -84,11 +84,23 @@ class LinkedList {
 		listString = listString + `( ${traverse.value} ) -> null`;
 		return listString;
 	}
+	insertAt(value, index) {
+		let node = new Node(value);
+		let traverse = this.#head;
+		let listIndex = 0;
+		while (listIndex < index - 1 && traverse.nextNode != null) {
+			traverse = traverse.nextNode;
+			listIndex++;
+		}
+		node.nextNode = traverse.nextNode;
+		traverse.nextNode = node;
+	}
 }
 
 let list1 = new LinkedList();
 list1.append(1);
 list1.append(3);
 list1.append(2);
+list1.insertAt(29, 1);
 
 console.log(list1.toString());
