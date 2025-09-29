@@ -95,6 +95,15 @@ class LinkedList {
 		node.nextNode = traverse.nextNode;
 		traverse.nextNode = node;
 	}
+	removeAt(index) {
+		let traverse = this.#head;
+		let listIndex = 0;
+		while (listIndex < index - 1 && traverse.nextNode != null) {
+			traverse = traverse.nextNode;
+			listIndex++;
+		}
+		traverse.nextNode = traverse.nextNode.nextNode;
+	}
 }
 
 let list1 = new LinkedList();
@@ -102,5 +111,6 @@ list1.append(1);
 list1.append(3);
 list1.append(2);
 list1.insertAt(29, 1);
+list1.removeAt(1);
 
 console.log(list1.toString());
