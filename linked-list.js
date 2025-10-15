@@ -21,10 +21,10 @@ class LinkedList {
 	}
 	size() {
 		let traverse = this.#head;
-		let listSize = 1;
-		while (traverse.nextNode != null) {
-			traverse = traverse.nextNode;
+		let listSize = 0;
+		while (traverse) {
 			listSize++;
+			traverse = traverse.nextNode;
 		}
 		return listSize;
 	}
@@ -33,7 +33,8 @@ class LinkedList {
 	}
 	tail() {
 		let traverse = this.#head;
-		while (traverse.nextNode != null) traverse = traverse.nextNode;
+		while (traverse && traverse.nextNode != null)
+			traverse = traverse.nextNode;
 		return traverse;
 	}
 	at(index) {
@@ -42,7 +43,7 @@ class LinkedList {
 		else {
 			let traverse = this.#head;
 			let listIndex = 0;
-			while (listIndex < index && traverse.nextNode != null) {
+			while (listIndex < index && traverse && traverse.nextNode != null) {
 				traverse = traverse.nextNode;
 				listIndex++;
 			}
@@ -51,27 +52,30 @@ class LinkedList {
 	}
 	pop() {
 		let traverse = this.#head;
-		while (traverse.nextNode.nextNode != null) traverse = traverse.nextNode;
+		while (
+			traverse &&
+			traverse.nextNode != null &&
+			traverse.nextNode.nextNode != null
+		)
+			traverse = traverse.nextNode;
 		traverse.nextNode = null;
 	}
 	contains(value) {
 		let traverse = this.#head;
-		while (traverse.nextNode != null) {
+		while (traverse) {
 			if (traverse.value === value) return true;
 			traverse = traverse.nextNode;
 		}
-		if (traverse.value === value) return true; //check for last node
 		return false;
 	}
 	find(value) {
 		let traverse = this.#head;
 		let index = 0;
-		while (traverse.nextNode != null) {
+		while (index < this.size() - 1 && traverse) {
 			if (traverse.value === value) return index;
 			traverse = traverse.nextNode;
 			index++;
 		}
-		if (traverse.value === value) return index; //check for last node
 		return null;
 	}
 	toString() {
@@ -88,24 +92,45 @@ class LinkedList {
 		if (index >= this.size())
 			return { error: new Error("Index must be less than list size!") };
 		let node = new Node(value);
-		let traverse = this.#head;
-		let listIndex = 0;
-		while (listIndex < index - 1 && traverse.nextNode != null) {
-			traverse = traverse.nextNode;
-			listIndex++;
+		if (!this.#head) {
+			this.#head = node;
+		} else {
+			let traverse = this.#head;
+			let listIndex = 0;
+			while (
+				listIndex < index - 1 &&
+				traverse &&
+				traverse.nextNode != null
+			) {
+				traverse = traverse.nextNode;
+				listIndex++;
+			}
+			node.nextNode = traverse.nextNode;
+			traverse.nextNode = node;
 		}
-		node.nextNode = traverse.nextNode;
-		traverse.nextNode = node;
 	}
 	removeAt(index) {
 		if (index >= this.size())
-			return { error: new Error("Index must be less than list size!") };
+			throw new Error("Index must be less than list size!");
 		let traverse = this.#head;
-		let listIndex = 0;
-		while (listIndex < index - 1 && traverse.nextNode != null) {
-			traverse = traverse.nextNode;
-			listIndex++;
+		if (index === 0) {
+			if (traverse.nextNode === null) this.#head = null;
+			else this.#head = this.#head.nextNode;
+		} else {
+			let listIndex = 0;
+			while (
+				listIndex < index - 1 &&
+				traverse &&
+				traverse.nextNode != null
+			) {
+				traverse = traverse.nextNode;
+				listIndex++;
+			}
+			if (traverse && traverse.nextNode !== null) {
+				traverse.nextNode = traverse.nextNode.nextNode;
+			} else {
+				traverse.nextNode = null;
+			}
 		}
-		traverse.nextNode = traverse.nextNode.nextNode;
 	}
 }
